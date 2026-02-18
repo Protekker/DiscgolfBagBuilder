@@ -9,13 +9,16 @@ struct Disc {
     float glide;
     float turn;
     float fade;
+    char classification[20];
 };
 
 struct Bag {
     struct Disc discs[26];
     int count;
 };
+/*Optimal bag
 
+*/
 struct Slot {
     int puttPutter[10];
     int throwPutter[10];
@@ -26,6 +29,14 @@ struct Slot {
     int distance[10];
     int utility[10];
 };
+//turn+fade = tf
+struct FlightCharacteristic{
+    int flippy[100]; //tf<-2
+    int understable[100]; //-2<tf<-1
+    int straight[100]; //-1<tf<1
+    int overstable[100]; //1<tf<3
+    int beefy[100]; //3<tf
+};
 
 struct Disc createDisc(char *brand, char *name, float speed, float glide, float turn, float fade) {
     struct Disc disc;
@@ -35,6 +46,7 @@ struct Disc createDisc(char *brand, char *name, float speed, float glide, float 
     disc.glide = glide;
     disc.turn  = turn;
     disc.fade  = fade;
+    // disc.classification = classification;
     return disc;
 }
 
@@ -60,7 +72,8 @@ void printDisc(struct Disc disc){
     printf("%.1f ", disc.speed);
     printf("%.1f ", disc.glide);
     printf("%.1f ", disc.turn);
-    printf("%.1f\n", disc.fade);
+    printf("%.1f ", disc.fade);
+    printf("%s \n",disc.classification);
 }
 
 void sortBagBySpeedAndStability(struct Bag *bag) {
@@ -90,6 +103,42 @@ void printBag(struct Bag *bag){
     }
 }
 
+void classifyDiscs(struct Bag *bag){
+    for(int i=0;i<bag->count;i++){
+        int tf = bag->discs[i].turn+bag->discs[i].fade;
+        if (tf <= -3)
+        {
+            strcpy(bag->discs[i].classification,"Flippy");
+        }
+        else if (-3 < tf && tf <= -1)
+        {
+            strcpy(bag->discs[i].classification,"Understable");
+        }
+        else if (-1 < tf && tf <= 1)
+        {
+            strcpy(bag->discs[i].classification,"Straight");
+        }
+        else if (1 < tf && tf <= 3)
+        {
+            strcpy(bag->discs[i].classification,"Overstable");
+        }
+        else
+        // else (3 < bag->discs[i].turn+bag->discs[i].fade)
+        {
+            strcpy(bag->discs[i].classification,"Beefy");
+        }
+        
+            
+    }
+
+
+}
+
+// struct Bag optimalBag(struct Bag *bag){
+//     struct Bag newbag;
+
+//     return newbag;
+// }
 
 
 int main() {
@@ -117,5 +166,7 @@ int main() {
     addDisc(disc10,&gripax6);
     printf("%d\n",gripax6.count);
     sortBagBySpeedAndStability(&gripax6);
+    printBag(&gripax6);
+    classifyDiscs(&gripax6);
     printBag(&gripax6);
 }
