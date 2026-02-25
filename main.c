@@ -96,7 +96,7 @@ struct Stack {
 };
 
 struct Bag {
-    struct Disc discs[26];
+    struct Disc discs[50];
     int count;
 };
 
@@ -252,11 +252,11 @@ void classifyDiscs(struct Bag *bag){
         {
             strcpy(bag->discs[i].classification,"Flippy");
         }
-        else if (-3 < turnfade && turnfade <= -1)
+        else if (-3 < turnfade && turnfade <= 0)
         {
             strcpy(bag->discs[i].classification,"Understable");
         }
-        else if (-1 < turnfade && turnfade <= 1)
+        else if (0 < turnfade && turnfade <= 1)
         {
             strcpy(bag->discs[i].classification,"Straight");
         }
@@ -277,11 +277,11 @@ void classifyDiscs(struct Bag *bag){
         {
             strcpy(bag->discs[i].slot,"Approach");
         }
-        else if (5 <= speed && speed <= 6)
+        else if (5 <= speed && speed < 6)
         {
             strcpy(bag->discs[i].slot,"Midrange");
         }
-        else if (6 < speed && speed < 9.5)
+        else if (6 <= speed && speed < 9.5)
         {
             strcpy(bag->discs[i].slot,"Fairway");
         }
@@ -526,6 +526,7 @@ int main() {
     createDisc("MVP","Resistor",6,4,0,3.5),
     createDisc("MVP","Tesla",9,5,-1,2),
     createDisc("MVP","GOOSE Reactor",5,5,-0.5,1.5),
+    createDisc("Discmania","Function",8,6,-4,1)
 };
 
 
@@ -535,34 +536,7 @@ int main() {
     for (int i = 0; i<totalDiscsCreated;i++){
         addDisc(allDiscs[i],&gripax6);
     }
-    // addDisc(disc1, &gripax6);
-    // addDisc(disc2,&gripax6);
-    // addDisc(disc3,&gripax6);
-    // addDisc(disc4,&gripax6);
-    // addDisc(disc5,&gripax6);
-    // addDisc(disc6, &gripax6);
-    // addDisc(disc7,&gripax6);
-    // addDisc(disc8,&gripax6);
-    // addDisc(disc9,&gripax6);
-    // addDisc(disc10,&gripax6);
-    // addDisc(disc11, &gripax6);
-    // addDisc(disc12,&gripax6);
-    // addDisc(disc13,&gripax6);
-    // addDisc(disc14,&gripax6);
-    // addDisc(disc15,&gripax6);
-    // addDisc(disc16, &gripax6);
-    // addDisc(disc17,&gripax6);
-    // addDisc(disc18,&gripax6);
-    // addDisc(disc19,&gripax6);
-    // addDisc(disc20,&gripax6);
-    // addDisc(disc21,&gripax6);
-    // addDisc(disc22,&gripax6);
-    // addDisc(disc23,&gripax6);
-    // addDisc(disc24,&gripax6);
-    // addDisc(disc25,&gripax6);
-    // addDisc(disc26,&gripax6);
-    //make auto disc add.
-    // printf("%d\n",gripax6.count);
+    // printf("%d",totalDiscsCreated);
 
     sortBagBySpeedAndStability(&gripax6);
     // printBag(&gripax6);
@@ -572,6 +546,5 @@ int main() {
     // printStack(&stackofmyprettydiscs);
     struct Bag optimalgripax6 = optimalBag(&stackofmyprettydiscs);
     printBag(&optimalgripax6);
-
     
 }
