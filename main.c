@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <time.h>
 
 //maybe make such that pros get more flippy and noobs more overstable or just make the noob bag more flippy
 // Currently stability mostly for amateuer around 900 rating
@@ -11,14 +12,15 @@ struct Disc {
     char name[20];
     char classification[20];
     char slot[20];
+    int id;
     float speed;
     float glide;
     float turn;
     float fade;
-    
 };
 
 struct Stack {
+    int putterCount;
     struct Disc flippyPutter[20];
     int flippyPutterCount;
     struct Disc understablePutter[20];
@@ -30,6 +32,7 @@ struct Stack {
     struct Disc beefyPutter[20];
     int beefyPutterCount;
 
+    int approachCount;
     struct Disc flippyApproach[20];
     int flippyApproachCount;
     struct Disc understableApproach[20];
@@ -41,6 +44,7 @@ struct Stack {
     struct Disc beefyApproach[20];
     int beefyApproachCount;
 
+    int midrangeCount;
     struct Disc flippyMidrange[20];
     int flippyMidrangeCount;
     struct Disc understableMidrange[20];
@@ -52,6 +56,7 @@ struct Stack {
     struct Disc beefyMidrange[20];
     int beefyMidrangeCount;
 
+    int fairwayCount;
     struct Disc flippyFairway[20];
     int flippyFairwayCount;
     struct Disc understableFairway[20];
@@ -63,6 +68,7 @@ struct Stack {
     struct Disc beefyFairway[20];
     int beefyFairwayCount;
 
+    int controlCount;
     struct Disc flippyControl[20];
     int flippyControlCount;
     struct Disc understableControl[20];
@@ -74,6 +80,7 @@ struct Stack {
     struct Disc beefyControl[20];
     int beefyControlCount;
 
+    int distanceCount;
     struct Disc flippyDistance[20];
     int flippyDistanceCount;
     struct Disc understableDistance[20];
@@ -93,6 +100,8 @@ struct Bag {
     int count;
 };
 
+int totalDiscsCreated = 0;
+
 struct Disc createDisc(char *brand, char *name, float speed, float glide, float turn, float fade) {
     struct Disc disc;
     strcpy(disc.brand, brand);
@@ -101,6 +110,7 @@ struct Disc createDisc(char *brand, char *name, float speed, float glide, float 
     disc.glide = glide;
     disc.turn  = turn;
     disc.fade  = fade;
+    disc.id = totalDiscsCreated++;
     // disc.classification = classification;
     return disc;
 }
@@ -299,167 +309,238 @@ struct Stack sortDiscs(struct Bag *bag){
         if (strcmp(cls,"Flippy") == 0 && strcmp(slot,"Putter") == 0) {
             stack.flippyPutter[stack.flippyPutterCount++] = bag->discs[i];
             stack.stackCount++;
+            stack.putterCount++;
         } else if (strcmp(cls,"Understable") == 0 && strcmp(slot,"Putter") == 0) {
             stack.understablePutter[stack.understablePutterCount++] = bag->discs[i];
             stack.stackCount++;
+            stack.putterCount++;
         } else if (strcmp(cls,"Straight") == 0 && strcmp(slot,"Putter") == 0) {
             stack.straightPutter[stack.straightPutterCount++] = bag->discs[i];
             stack.stackCount++;
+            stack.putterCount++;
         } else if (strcmp(cls,"Overstable") == 0 && strcmp(slot,"Putter") == 0) {
             stack.overstablePutter[stack.overstablePutterCount++] = bag->discs[i];
             stack.stackCount++;
+            stack.putterCount++;
         } else if (strcmp(cls,"Beefy") == 0 && strcmp(slot,"Putter") == 0) {
             stack.beefyPutter[stack.beefyPutterCount++] = bag->discs[i];
             stack.stackCount++;
+            stack.putterCount++;
 
         // Approach
         } else if (strcmp(cls,"Flippy") == 0 && strcmp(slot,"Approach") == 0) {
             stack.flippyApproach[stack.flippyApproachCount++] = bag->discs[i];
             stack.stackCount++;
+            stack.approachCount++;
         } else if (strcmp(cls,"Understable") == 0 && strcmp(slot,"Approach") == 0) {
             stack.understableApproach[stack.understableApproachCount++] = bag->discs[i];
             stack.stackCount++;
+            stack.approachCount++;
         } else if (strcmp(cls,"Straight") == 0 && strcmp(slot,"Approach") == 0) {
             stack.straightApproach[stack.straightApproachCount++] = bag->discs[i];
             stack.stackCount++;
+            stack.approachCount++;
         } else if (strcmp(cls,"Overstable") == 0 && strcmp(slot,"Approach") == 0) {
             stack.overstableApproach[stack.overstableApproachCount++] = bag->discs[i];
             stack.stackCount++;
+            stack.approachCount++;
         } else if (strcmp(cls,"Beefy") == 0 && strcmp(slot,"Approach") == 0) {
             stack.beefyApproach[stack.beefyApproachCount++] = bag->discs[i];
             stack.stackCount++;
+            stack.approachCount++;
 
         // Midrange
         } else if (strcmp(cls,"Flippy") == 0 && strcmp(slot,"Midrange") == 0) {
             stack.flippyMidrange[stack.flippyMidrangeCount++] = bag->discs[i];
             stack.stackCount++;
+            stack.midrangeCount++;
         } else if (strcmp(cls,"Understable") == 0 && strcmp(slot,"Midrange") == 0) {
             stack.understableMidrange[stack.understableMidrangeCount++] = bag->discs[i];
             stack.stackCount++;
+            stack.midrangeCount++;
         } else if (strcmp(cls,"Straight") == 0 && strcmp(slot,"Midrange") == 0) {
             stack.straightMidrange[stack.straightMidrangeCount++] = bag->discs[i];
             stack.stackCount++;
+            stack.midrangeCount++;
         } else if (strcmp(cls,"Overstable") == 0 && strcmp(slot,"Midrange") == 0) {
             stack.overstableMidrange[stack.overstableMidrangeCount++] = bag->discs[i];
             stack.stackCount++;
+            stack.midrangeCount++;
         } else if (strcmp(cls,"Beefy") == 0 && strcmp(slot,"Midrange") == 0) {
             stack.beefyMidrange[stack.beefyMidrangeCount++] = bag->discs[i];
             stack.stackCount++;
+            stack.midrangeCount++;
 
         // Fairway
         } else if (strcmp(cls,"Flippy") == 0 && strcmp(slot,"Fairway") == 0) {
             stack.flippyFairway[stack.flippyFairwayCount++] = bag->discs[i];
             stack.stackCount++;
+            stack.fairwayCount++;
         } else if (strcmp(cls,"Understable") == 0 && strcmp(slot,"Fairway") == 0) {
             stack.understableFairway[stack.understableFairwayCount++] = bag->discs[i];
             stack.stackCount++;
+            stack.fairwayCount++;
         } else if (strcmp(cls,"Straight") == 0 && strcmp(slot,"Fairway") == 0) {
             stack.straightFairway[stack.straightFairwayCount++] = bag->discs[i];
             stack.stackCount++;
+            stack.fairwayCount++;
         } else if (strcmp(cls,"Overstable") == 0 && strcmp(slot,"Fairway") == 0) {
             stack.overstableFairway[stack.overstableFairwayCount++] = bag->discs[i];
             stack.stackCount++;
+            stack.fairwayCount++;
         } else if (strcmp(cls,"Beefy") == 0 && strcmp(slot,"Fairway") == 0) {
             stack.beefyFairway[stack.beefyFairwayCount++] = bag->discs[i];
             stack.stackCount++;
+            stack.fairwayCount++;
 
         // Control
         } else if (strcmp(cls,"Flippy") == 0 && strcmp(slot,"Control") == 0) {
             stack.flippyControl[stack.flippyControlCount++] = bag->discs[i];
             stack.stackCount++;
+            stack.controlCount++;
         } else if (strcmp(cls,"Understable") == 0 && strcmp(slot,"Control") == 0) {
             stack.understableControl[stack.understableControlCount++] = bag->discs[i];
             stack.stackCount++;
+            stack.controlCount++;
         } else if (strcmp(cls,"Straight") == 0 && strcmp(slot,"Control") == 0) {
             stack.straightControl[stack.straightControlCount++] = bag->discs[i];
             stack.stackCount++;
+            stack.controlCount++;
         } else if (strcmp(cls,"Overstable") == 0 && strcmp(slot,"Control") == 0) {
             stack.overstableControl[stack.overstableControlCount++] = bag->discs[i];
             stack.stackCount++;
+            stack.controlCount++;
         } else if (strcmp(cls,"Beefy") == 0 && strcmp(slot,"Control") == 0) {
             stack.beefyControl[stack.beefyControlCount++] = bag->discs[i];
             stack.stackCount++;
+            stack.controlCount++;
 
         // Distance
         } else if (strcmp(cls,"Flippy") == 0 && strcmp(slot,"Distance") == 0) {
             stack.flippyDistance[stack.flippyDistanceCount++] = bag->discs[i];
             stack.stackCount++;
+            stack.distanceCount++;
         } else if (strcmp(cls,"Understable") == 0 && strcmp(slot,"Distance") == 0) {
             stack.understableDistance[stack.understableDistanceCount++] = bag->discs[i];
             stack.stackCount++;
+            stack.distanceCount++;
         } else if (strcmp(cls,"Straight") == 0 && strcmp(slot,"Distance") == 0) {
             stack.straightDistance[stack.straightDistanceCount++] = bag->discs[i];
             stack.stackCount++;
+            stack.distanceCount++;
         } else if (strcmp(cls,"Overstable") == 0 && strcmp(slot,"Distance") == 0) {
             stack.overstableDistance[stack.overstableDistanceCount++] = bag->discs[i];
             stack.stackCount++;
+            stack.distanceCount++;
         } else if (strcmp(cls,"Beefy") == 0 && strcmp(slot,"Distance") == 0) {
             stack.beefyDistance[stack.beefyDistanceCount++] = bag->discs[i];
             stack.stackCount++;
+            stack.distanceCount++;
         }
     }
     return stack;
 }
 
-struct Bag optimalBag(struct Bag *bag){
+struct Bag optimalBag(struct Stack *stack) {
     struct Bag newbag = {0};
-    // int puttersMax = 3;
-    // int approachMax = 3;
-    // int midrangeMax = 3;
-    // int fairwayMax = 3;
-    // int controlMax = 3;
-    // int distanceMax = 3;
-    int maxDiscs = 18;
     newbag.count = 0;
-    
-    for (int i = 0; i<bag->count;i++){
+    srand(time(NULL));
 
-        if(strcmp(bag->discs[i].classification,"Understable") == 0 && strcmp(bag->discs[i].slot,"Putter") == 0){
-            newbag.discs[newbag.count] = bag->discs[i];
-            newbag.count +=1;
-        }
-    
-    }
+    // --- PUTTERS ---
+    if (stack->understablePutterCount > 0)
+        addDisc(stack->understablePutter[rand() % stack->understablePutterCount], &newbag);
+    if (stack->straightPutterCount > 0)
+        addDisc(stack->straightPutter[rand() % stack->straightPutterCount], &newbag);
+    if (stack->overstablePutterCount > 0)
+        addDisc(stack->overstablePutter[rand() % stack->overstablePutterCount], &newbag);
+
+    // --- APPROACH ---
+    if (stack->understableApproachCount > 0)
+        addDisc(stack->understableApproach[rand() % stack->understableApproachCount], &newbag);
+    if (stack->straightApproachCount > 0)
+        addDisc(stack->straightApproach[rand() % stack->straightApproachCount], &newbag);
+    if (stack->overstableApproachCount > 0)
+        addDisc(stack->overstableApproach[rand() % stack->overstableApproachCount], &newbag);
+
+    // --- MIDRANGE ---
+    if (stack->understableMidrangeCount > 0)
+        addDisc(stack->understableMidrange[rand() % stack->understableMidrangeCount], &newbag);
+    if (stack->straightMidrangeCount > 0)
+        addDisc(stack->straightMidrange[rand() % stack->straightMidrangeCount], &newbag);
+    if (stack->overstableMidrangeCount > 0)
+        addDisc(stack->overstableMidrange[rand() % stack->overstableMidrangeCount], &newbag);
+
+    // --- FAIRWAY ---
+    if (stack->understableFairwayCount > 0)
+        addDisc(stack->understableFairway[rand() % stack->understableFairwayCount], &newbag);
+    if (stack->straightFairwayCount > 0)
+        addDisc(stack->straightFairway[rand() % stack->straightFairwayCount], &newbag);
+    if (stack->overstableFairwayCount > 0)
+        addDisc(stack->overstableFairway[rand() % stack->overstableFairwayCount], &newbag);
+
+    // --- CONTROL ---
+    if (stack->understableControlCount > 0)
+        addDisc(stack->understableControl[rand() % stack->understableControlCount], &newbag);
+    if (stack->straightControlCount > 0)
+        addDisc(stack->straightControl[rand() % stack->straightControlCount], &newbag);
+    if (stack->overstableControlCount > 0)
+        addDisc(stack->overstableControl[rand() % stack->overstableControlCount], &newbag);
+
+    // --- DISTANCE ---
+    if (stack->understableDistanceCount > 0)
+        addDisc(stack->understableDistance[rand() % stack->understableDistanceCount], &newbag);
+    if (stack->straightDistanceCount > 0)
+        addDisc(stack->straightDistance[rand() % stack->straightDistanceCount], &newbag);
+    if (stack->overstableDistanceCount > 0)
+        addDisc(stack->overstableDistance[rand() % stack->overstableDistanceCount], &newbag);
+
     return newbag;
 }
 
 
 int main() {
-    struct Disc disc1 = createDisc("Kastaplast", "Berg", 1, 1, 0, 2);
-    struct Disc disc2 = createDisc("Kastaplast","Berg X",1,1,1,2);
-    struct Disc disc3 = createDisc("Kastaplast","Berg X",1,1,1,2);
-    struct Disc disc4 = createDisc("Axiom","Proxy x",3,3,-1,0.5);
-    struct Disc disc5 = createDisc("Kastaplast","Reko X",3,3,0,2);
-    struct Disc disc6 = createDisc("Discraft","Zone SS",4,4,-1,2);
-    // struct Disc disc7 = createDisc("Axiom","Tempo",4,4,0,2.5);
-    // struct Disc disc8 = createDisc("Discraft","Zone",4,3,0,3);
-    // struct Disc disc9 = createDisc("Prodigy","A2",4,2,0,4);
-    // struct Disc disc10 = createDisc("Axiom","Pyro",5,4,0,2.5);
-    // struct Disc disc11 = createDisc("Latitude 64", "Rive", 13, 5, 0, 3.5);
-    // struct Disc disc12 = createDisc("Discmania","PD",10,4,0,3);
-    // struct Disc disc13 = createDisc("Latitude 64","Pioneer",9,4,0,3);
-    // struct Disc disc14 = createDisc("Axiom","Hex",5,5,-1,1);
-    // struct Disc disc15 = createDisc("MVP","Servo",6.5,5,-1,2);
-    // struct Disc disc16 = createDisc("MVP","Reactor",5,5,-0.5,1.5);
-    // struct Disc disc17 = createDisc("MVP","Trail",10,5,-1,1);
-    // struct Disc disc18 = createDisc("Discmania","DD3",12,5,-1,3);
-    // struct Disc disc19 = createDisc("Streamline","Boost",9.5,4,0,2.5);
-    // struct Disc disc20 = createDisc("Dynamic Discs","Felon",9,3,0.5,4);
-    // struct Disc disc21 = createDisc("Discmania", "PD2", 12, 4, 0, 4);
-    // struct Disc disc22 = createDisc("Kastaplast","Guld",13,5,-0.5,3);
-    // struct Disc disc23 = createDisc("MVP","Zenith",11,5,-0.5,2);
-    // struct Disc disc24 = createDisc("MVP","Resistor",6,4,0,3.5);
-    // struct Disc disc25 = createDisc("MVP","Tesla",9,5,-1,2);
-    // struct Disc disc26 = createDisc("MVP","GOOSE Reactor",5,5,-0.5,1.5);
+    struct Disc allDiscs[] = {
+    createDisc("Kastaplast", "Berg", 1, 1, 0, 2),
+    createDisc("Kastaplast","Berg X",1,1,1,2),
+    createDisc("Kastaplast","Berg X",1,1,1,2),
+    createDisc("Axiom","Proxy x",3,3,-1,0.5),
+    createDisc("Kastaplast","Reko X",3,3,0,2),
+    createDisc("Discraft","Zone SS",4,4,-1,2),
+    createDisc("Axiom","Tempo",4,4,0,2.5),
+    createDisc("Discraft","Zone",4,3,0,3),
+    createDisc("Prodigy","A2",4,2,0,4),
+    createDisc("Axiom","Pyro",5,4,0,2.5),
+    createDisc("Latitude 64", "Rive", 13, 5, 0, 3.5),
+    createDisc("Discmania","PD",10,4,0,3),
+    createDisc("Latitude 64","Pioneer",9,4,0,3),
+    createDisc("Axiom","Hex",5,5,-1,1),
+    createDisc("MVP","Servo",6.5,5,-1,2),
+    createDisc("MVP","Reactor",5,5,-0.5,1.5),
+    createDisc("MVP","Trail",10,5,-1,1),
+    createDisc("Discmania","DD3",12,5,-1,3),
+    createDisc("Streamline","Boost",9.5,4,0,2.5),
+    createDisc("Dynamic Discs","Felon",9,3,0.5,4),
+    createDisc("Discmania", "PD2", 12, 4, 0, 4),
+    createDisc("Kastaplast","Guld",13,5,-0.5,3),
+    createDisc("MVP","Zenith",11,5,-0.5,2),
+    createDisc("MVP","Resistor",6,4,0,3.5),
+    createDisc("MVP","Tesla",9,5,-1,2),
+    createDisc("MVP","GOOSE Reactor",5,5,-0.5,1.5),
+};
+
 
     struct Bag gripax6 = {0};
     gripax6.count = 0;
-    addDisc(disc1, &gripax6);
-    addDisc(disc2,&gripax6);
-    addDisc(disc3,&gripax6);
-    addDisc(disc4,&gripax6);
-    addDisc(disc5,&gripax6);
-    addDisc(disc6, &gripax6);
+    // printf("%d\n",totalDiscsCreated);
+    for (int i = 0; i<totalDiscsCreated;i++){
+        addDisc(allDiscs[i],&gripax6);
+    }
+    // addDisc(disc1, &gripax6);
+    // addDisc(disc2,&gripax6);
+    // addDisc(disc3,&gripax6);
+    // addDisc(disc4,&gripax6);
+    // addDisc(disc5,&gripax6);
+    // addDisc(disc6, &gripax6);
     // addDisc(disc7,&gripax6);
     // addDisc(disc8,&gripax6);
     // addDisc(disc9,&gripax6);
@@ -474,23 +555,23 @@ int main() {
     // addDisc(disc18,&gripax6);
     // addDisc(disc19,&gripax6);
     // addDisc(disc20,&gripax6);
-    // addDisc(disc21, &gripax6);
+    // addDisc(disc21,&gripax6);
     // addDisc(disc22,&gripax6);
     // addDisc(disc23,&gripax6);
     // addDisc(disc24,&gripax6);
     // addDisc(disc25,&gripax6);
     // addDisc(disc26,&gripax6);
     //make auto disc add.
-    printf("%d\n",gripax6.count);
+    // printf("%d\n",gripax6.count);
+
     sortBagBySpeedAndStability(&gripax6);
     // printBag(&gripax6);
     classifyDiscs(&gripax6);
-    strcpy(gripax6.discs[16].classification,"Understable");
-    printBag(&gripax6);
-    // struct Bag Frid = optimalBag(&gripax6);
-    // printBag(&Frid);
-    // Make the print nicer
+    // strcpy(gripax6.discs[16].classification,"Understable");
     struct Stack stackofmyprettydiscs = sortDiscs(&gripax6);
-    printStack(&stackofmyprettydiscs);
+    // printStack(&stackofmyprettydiscs);
+    struct Bag optimalgripax6 = optimalBag(&stackofmyprettydiscs);
+    printBag(&optimalgripax6);
+
     
 }
